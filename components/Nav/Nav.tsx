@@ -4,14 +4,14 @@ import { FC } from "react";
 
  
 interface Props {
-
+    color?: string
 }
 
 const Nav: FC<Props> = (props) => {
 
     return (
         <>
-            <nav id="nav" className=" bg-sky-800 lg:px-32 md:px-20 sm:px-10">
+            <nav id="nav" className={`${props.color ? `bg-${props.color}` : ""} lg:px-32 md:px-20 sm:px-10`}>
                 <div id="nav-inner" className="flex justify-between min-h-24 h-24">
                     <div id="logo" className="h-full p-4 w-24">
                         <Link href="/" className="">
