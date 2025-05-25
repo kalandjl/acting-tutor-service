@@ -20,6 +20,7 @@ export default function RootLayout({
         className={`antialiased`}
       >
         {children}
+        <div className="stone-800"></div>
       </body>
     </html>
   );

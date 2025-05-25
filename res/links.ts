@@ -13,7 +13,7 @@ const pages = [
     },
     {
         title: "Book",
-        href: "/booking"
+        href: "/book"
     }
 ]
 
