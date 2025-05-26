@@ -234,7 +234,7 @@ const App = () => {
                 <p>
                   Before submitting a booking request, please read our <Link href="/policy" className='text-blue-700'>
                   <span className='relative group'>
-                    booking Policy
+                    booking policy
                     <span className={`absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-700 transition-all duration-300 group-hover:w-full`}></span>
                   </span>
                 </Link>

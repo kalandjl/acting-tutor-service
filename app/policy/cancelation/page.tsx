@@ -16,7 +16,6 @@ const Home = () => {
                             Out of respect for your coach, please note that cancellations made within twelve (12) hours of your scheduled coaching session will be subject to a $25 cancellation fee. Cancellations made within one (1) hour will be subject to the full session fee.
                         </p>
                     </div>
-
                 </section>
             </Layout>
         </>
