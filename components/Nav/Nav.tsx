@@ -15,7 +15,7 @@ const Nav: FC<Props> = (props) => {
                 <div id="nav-inner" className="flex justify-between min-h-24 h-24">
                     <div id="logo" className="h-full p-4 w-24">
                         <Link href="/" className="">
-                            <div id="mock-logo" className="bg-red-500 opacity-20 rounded-md h-full w-full transition ease-in-out hover:scale-105 hover:cursor-pointer"></div>
+                            <div id="mock-logo" className=" rounded-md h-full w-full transition ease-in-out hover:scale-105 hover:cursor-pointer"></div>
                         </Link>
                     </div>
                     <div id="links" className="grid gap-16 grid-flow-col h-full">
