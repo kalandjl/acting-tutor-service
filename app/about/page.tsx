@@ -164,14 +164,14 @@ Nicole will either work with your audition side/speech/monologue or she will per
             <p className="text-sky-100 leading-relaxed text-xl md:text-2xl mb-12">
                 Have questions or want to book a session with Nicole? We'd love to hear from you!
             </p>
-            <a
-                href="/contact" // Assuming you have a contact page route
+            <Link
+                href="/book" // Assuming you have a contact page route
                 className="inline-block bg-white text-sky-800 font-bold py-5 px-12 rounded-full shadow-2xl text-xl md:text-2xl
                         transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-100
                         focus:outline-none focus:ring-4 focus:ring-sky-300 focus:ring-opacity-75"
             >
                 Book a Session
-            </a>
+            </Link>
             </div>
         </section>
         </div>
