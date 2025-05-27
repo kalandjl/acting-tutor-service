@@ -97,7 +97,7 @@ const App = () => {
       <div className="font-sans text-gray-800">
 
         {/* Section 1: Hero - Book a Session Title */}
-        <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center p-4 pt-24 relative overflow-hidden">
+        <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center p-4 pt-5 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-sky-900 to-sky-700 opacity-75"></div>
           <div className="text-center max-w-4xl relative z-10">
             <h1 className="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg">
