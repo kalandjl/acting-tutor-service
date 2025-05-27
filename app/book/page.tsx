@@ -107,6 +107,7 @@ const App = () => {
               Ready to take the next step? Fill out the form below to schedule your personalized coaching session with Nicole.
             </p>
           </div>
+          <ActionArrow />
         </section>
 
         {/* Section 2: Booking Form */}

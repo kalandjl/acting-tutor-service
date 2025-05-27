@@ -89,7 +89,7 @@ const AboutSection: FC<Props> = (props) => {
                 >
                     <Link href="/about" passHref>
                         <motion.button
-                            className="bg-sky-500 text-stone-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-sky-400 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sky-300"
+                            className="bg-sky-500 text-stone-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-sky-400 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sky-300 hover:cursor-pointer"
                             whileHover={{ scale: 1.05 }} // Subtle hover animation
                             whileTap={{ scale: 0.95 }} // Click animation
                         >

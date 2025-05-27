@@ -16,9 +16,13 @@ const pages = [
         href: "/faq"
     },
     {
+        title: "Contact",
+        href: "/contact"
+    },
+    {
         title: "Book",
         href: "/book"
-    }
+    },
 ]
 
 export default pages

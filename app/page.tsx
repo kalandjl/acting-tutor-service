@@ -24,8 +24,9 @@ const Home = () => {
     };
 
     return (
-        <Layout navColor="sky-500">
+        <Layout navColor="sky-800">
             <>
+                <div className="bg-sky-800"></div>
                 {/* Ensure navColor uses full Tailwind class */}
                 <section
                     id="hero"
@@ -43,6 +44,7 @@ const Home = () => {
                             className="opacity-60" // Subtle transparency to help text stand out
                         />
                     </div>
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
 
                     {/* Content Overlay */}
                     <motion.div
