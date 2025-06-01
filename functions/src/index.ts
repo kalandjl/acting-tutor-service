@@ -23,7 +23,7 @@
 //   preferredDateTime?: string; // Optional field
 //   message: string;
 //   website?: string; // Honeypot field, optional as it should be hidden
-//   // recaptchaToken?: string; // Uncomment if you integrate reCAPTCHA
+//   recaptchaToken?: string; // Uncomment if you integrate reCAPTCHA
 // }
 
 // /**
@@ -74,28 +74,28 @@
 //     );
 //   }
 
-//   // --- 3. (Optional) reCAPTCHA Verification ---
-//   // If you integrate Google reCAPTCHA on your frontend, you would verify the token here.
-//   // const recaptchaToken = formData.recaptchaToken;
-//   // if (!recaptchaToken) {
-//   //   throw new functions.https.HttpsError('unauthenticated', 'reCAPTCHA token missing.');
-//   // }
-//   // try {
-//   //   const recaptchaSecret = functions.config().recaptcha.secret; // Store your secret securely in Firebase config
-//   //   const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-//   //     method: 'POST',
-//   //     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-//   //     body: `secret=${recaptchaSecret}&response=${recaptchaToken}`
-//   //   });
-//   //   const recaptchaJson = await recaptchaResponse.json();
-//   //   if (!recaptchaJson.success || recaptchaJson.score < 0.5) { // Adjust score threshold as needed
-//   //     console.warn('reCAPTCHA verification failed or score too low:', recaptchaJson);
-//   //     throw new functions.https.HttpsError('permission-denied', 'reCAPTCHA verification failed.');
-//   //   }
-//   // } catch (error) {
-//   //   console.error('Error verifying reCAPTCHA:', error);
-//   //   throw new functions.https.HttpsError('internal', 'Could not verify reCAPTCHA.');
-//   // }
+// //   --- 3. (Optional) reCAPTCHA Verification ---
+// //   If you integrate Google reCAPTCHA on your frontend, you would verify the token here.
+//   const recaptchaToken = formData.recaptchaToken;
+//   if (!recaptchaToken) {
+//     throw new functions.https.HttpsError('unauthenticated', 'reCAPTCHA token missing.');
+//   }
+//   try {
+//     const recaptchaSecret = functions.config().recaptcha.secret; // Store your secret securely in Firebase config
+//     const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+//       body: `secret=${recaptchaSecret}&response=${recaptchaToken}`
+//     });
+//     const recaptchaJson = await recaptchaResponse.json();
+//     if (!recaptchaJson.success || recaptchaJson.score < 0.5) { // Adjust score threshold as needed
+//       console.warn('reCAPTCHA verification failed or score too low:', recaptchaJson);
+//       throw new functions.https.HttpsError('permission-denied', 'reCAPTCHA verification failed.');
+//     }
+//   } catch (error) {
+//     console.error('Error verifying reCAPTCHA:', error);
+//     throw new functions.https.HttpsError('internal', 'Could not verify reCAPTCHA.');
+//   }
 
 
 //   // --- 4. (Optional) Rate Limiting ---
@@ -118,7 +118,6 @@
 //     // Add any other relevant metadata
 //     status: 'pending', // Initial status
 //     // You might want to store the reCAPTCHA score if you use it
-//     // recaptchaScore: recaptchaJson ? recaptchaJson.score : null,
 //   };
 
 //   try {

@@ -4,15 +4,23 @@ import Layout from '@/components/Layout';
 import { functions } from '@/lib/firebase';
 import { httpsCallable } from 'firebase/functions';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useEffect
+
+// Declare `grecaptcha` globally for TypeScript
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 
 // Get a callable reference to your Cloud Function
 const callablesubmitBooking = httpsCallable(functions, 'submitBooking');
 
-// The main App component for the Booking page
-// The main App component for the Booking page
+// Replace with your actual reCAPTCHA Site Key
+// It's best practice to load this from environment variables (e.g., process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || 'YOUR_RECAPTCHA_SITE_KEY';
+
 const App = () => {
-  // State to manage form input values
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,12 +28,26 @@ const App = () => {
     preferredDateTime: '',
     message: '',
     website: '', // Honeypot field
+    recaptchaToken: '', // New state for reCAPTCHA token
   });
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle input changes
-  const handleChange = (e: any) => {
+  // Load the reCAPTCHA script dynamically
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
@@ -33,8 +55,7 @@ const App = () => {
     }));
   };
 
-  // onSubmit function
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -49,7 +70,6 @@ const App = () => {
     }
 
     // --- Client-side Basic Validation ---
-    // (Still good for immediate user feedback, but server-side is definitive)
     if (!formData.name || !formData.email || !formData.message) {
       setSubmissionMessage('Please fill in all required fields (Name, Email, Message).');
       setIsSubmitting(false);
@@ -57,31 +77,39 @@ const App = () => {
     }
 
     try {
-      // Call the Firebase Cloud Function
-      // The `data` property of the response will contain what your Cloud Function returns
-      const result = await callablesubmitBooking(formData);
-      const responseData = result.data as { success: boolean; message: string; docId?: string }; // Cast to expected type
+      // Execute reCAPTCHA to get a token
+      if (window.grecaptcha) {
+        await window.grecaptcha.ready(async () => {
+          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit_booking_form' });
+          setFormData(prevData => ({ ...prevData, recaptchaToken: token }));
 
-      if (responseData.success) {
-        setSubmissionMessage(responseData.message);
-        // Clear form after successful submission
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          preferredDateTime: '',
-          message: '',
-          website: '',
+          // Now call the Cloud Function with the updated formData (including token)
+          const result = await callablesubmitBooking({ ...formData, recaptchaToken: token });
+          const responseData = result.data as { success: boolean; message: string; docId?: string };
+
+          if (responseData.success) {
+            setSubmissionMessage(responseData.message);
+            // Clear form after successful submission
+            setFormData({
+              name: '',
+              email: '',
+              phone: '',
+              preferredDateTime: '',
+              message: '',
+              website: '',
+              recaptchaToken: '',
+            });
+          } else {
+            setSubmissionMessage(responseData.message || 'Something went wrong. Please try again.');
+          }
         });
       } else {
-        // This part might be hit if the Cloud Function explicitly returns success: false
-        setSubmissionMessage(responseData.message || 'Something went wrong. Please try again.');
+        setSubmissionMessage('reCAPTCHA not loaded. Please try again or refresh the page.');
+        console.error('grecaptcha object not found.');
       }
 
-    } catch (error: any) { // Use 'any' or more specific type for error object
+    } catch (error: any) {
       console.error('Error calling Cloud Function:', error);
-      // Firebase HTTPS callable functions return specific error codes and messages
-      // This helps you differentiate between types of errors (e.g., 'invalid-argument', 'permission-denied')
       if (error.code && error.message) {
         setSubmissionMessage(`Submission failed: ${error.message}`);
       } else {
@@ -186,7 +214,7 @@ const App = () => {
                   Preferred Date & Time (e.g., MM/DD/YYYY HH:MM AM/PM)
                 </label>
                 <input
-                  type="text" // Using text for flexibility, could be type="datetime-local" for specific browser support
+                  type="text"
                   id="preferredDateTime"
                   name="preferredDateTime"
                   value={formData.preferredDateTime}
@@ -223,11 +251,18 @@ const App = () => {
                   type="text"
                   id="website"
                   name="website"
-                  tabIndex={-1} // Prevent focus via keyboard navigation
-                  autoComplete="off" // Prevent browser autofill
+                  tabIndex={-1}
+                  autoComplete="off"
                   value={formData.website}
                   onChange={handleChange}
                 />
+              </div>
+
+              {/* reCAPTCHA Branding (Required if you hide the badge) */}
+              <div className="text-center text-gray-500 text-sm">
+                This site is protected by reCAPTCHA and the Google&nbsp;
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Privacy Policy</a> and&nbsp;
+                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Terms of Service</a> apply.
               </div>
 
               {/* Policy */}
@@ -249,7 +284,7 @@ const App = () => {
                             transition duration-300 ease-in-out transform hover:scale-105
                             focus:outline-none focus:ring-4 focus:ring-sky-300 focus:ring-opacity-75
                             disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={isSubmitting} // Disable button while submitting
+                  disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Sending...' : 'Send Booking Request'}
                 </button>
@@ -276,6 +311,5 @@ const App = () => {
     </Layout>
   );
 };
-
 
 export default App;
