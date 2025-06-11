@@ -1,6 +1,7 @@
 "use client"
 import ActionArrow from '@/components/ActionArrow';
 import Layout from '@/components/Layout';
+import PricingSection from '@/components/PricingSection';
 import { functions } from '@/lib/firebase';
 import { httpsCallable } from 'firebase/functions';
 import Link from 'next/link';
@@ -137,6 +138,8 @@ const App = () => {
           </div>
           <ActionArrow />
         </section>
+        
+        <PricingSection />
 
         {/* Section 2: Booking Form */}
         <section className="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-16 px-4 md:px-8">

@@ -53,16 +53,11 @@ const Home = () => {
                         Meet Nicole
                         </h2>
                         <p className="text-gray-700 leading-relaxed text-lg mb-4">
-                            Nicole is a seasoned performer and dedicated educator with over 25 years of experience in theatre arts. A versatile actor, accomplished singer, and trained dancer, she brings a dynamic, well-rounded approach to her teaching. After earning her Master’s degree in Theatre, Nicole established herself in Vancouver’s vibrant arts education scene, teaching at a number of prestigious private schools. She currently serves as the Head of Theatrical Arts at a leading independent school in Vancouver, where she oversees the drama curriculum, directs mainstage productions, and mentors aspiring young performers.
+                            Nicole’s teaching philosophy is rooted in deep respect for the craft and the individual journey of each student. She has a particular passion for specificity in performance, detailed text analysis, and encouraging students to see their work from the audience’s perspective. Known for her ability to cultivate nuanced, authentic character portrayals, Nicole emphasizes emotional truth and technical precision. Her classrooms are safe, inclusive spaces where students are challenged artistically and supported holistically. She is deeply committed to providing tailored mentorship, practical career guidance, and fostering the confidence and resilience necessary for success in the performing arts.
                         </p>
                     </div>    
 
                 </div>
-                
-                <p className="text-gray-700 leading-relaxed text-lg mb-4">
-                    Nicole’s teaching philosophy is rooted in deep respect for the craft and the individual journey of each student. She has a particular passion for specificity in performance, detailed text analysis, and encouraging students to see their work from the audience’s perspective. Known for her ability to cultivate nuanced, authentic character portrayals, Nicole emphasizes emotional truth and technical precision. Her classrooms are safe, inclusive spaces where students are challenged artistically and supported holistically. She is deeply committed to providing tailored mentorship, practical career guidance, and fostering the confidence and resilience necessary for success in the performing arts.
-                </p> 
-
             </div>
         </section>
 

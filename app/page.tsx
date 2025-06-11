@@ -69,7 +69,7 @@ const Home = () => {
                             className={`${nunito.className} text-base md:text-lg mt-6 max-w-3xl mx-auto`}
                             variants={itemVariants}
                         >
-                            With a passion for compelling narratives and a dedication to craft, Nicole McDonald delivers powerful and nuanced performances across stage and screen. Explore her work and artistic journey.
+                            With a passion for compelling narratives and a dedication to craft, Nicole McDonald delivers powerful and nuanced performances across stage and screen.
                         </motion.p>
                     </motion.div>
                 </section>
