@@ -11,14 +11,14 @@ A modern, responsive website built with **Next.js** and **Tailwind CSS** for Nic
 - Tailored color palette (`sky-800`, `stone-900`)
 - Responsive design and accessibility best practices
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Framer Motion (optional)](https://www.framer.com/motion/) for animation
 
-## 🔧 Getting Started
+## Getting Started
 
 ```bash
 # Install dependencies
