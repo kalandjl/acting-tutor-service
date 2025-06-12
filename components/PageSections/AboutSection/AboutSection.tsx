@@ -78,7 +78,7 @@ const AboutSection: FC<Props> = (props) => {
                     className={`${nunito.className} text-lg md:text-xl leading-relaxed mb-8`}
                     variants={itemVariants}
                 >
-                    After earning her Master’s degree in Theatre, Nicole established herself in Vancouver’s vibrant arts education scene, teaching at a number of prestigious private schools. She currently serves as the **Head of Theatrical Arts** at a leading independent school in Vancouver, where she oversees the drama curriculum, directs mainstage productions, and mentors aspiring young performers.
+                    After earning her Master’s degree in Theatre, Nicole established herself in Vancouver’s vibrant arts education scene, teaching at a number of prestigious private schools. She currently serves as the Head of Theatrical Arts at a leading independent school in Vancouver, where she oversees the drama curriculum, directs mainstage productions, and mentors aspiring young performers.
                 </motion.p>
 
                 {/* Call to Action Button */}
