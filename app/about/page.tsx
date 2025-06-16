@@ -13,55 +13,44 @@ const Home = () => {
 
   return (
     <>
-    <Layout>
+    <Layout navColor='stone-800'>
         <div className="font-sans text-gray-800">
 
-        {/* Section 1: Hero - About Us Title */}
-        {/* Designed to sit below a sky-800 navigation bar. */}
-        {/* Adjust pt-24 if your actual navigation bar height differs. */}
-        <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-            {/* Optional: Subtle background pattern or gradient for more depth */}
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-900 to-sky-700 opacity-75"></div>
-            <div className="text-center max-w-4xl relative z-10">
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg">
-                About Me
-            </h1>
-            <p className="text-xl md:text-2xl font-light opacity-90 leading-relaxed">
-                Discover Nicole's passion for theatre and her unique coaching approach.
-            </p>
-            </div>
-            <ActionArrow />
-        </section>
+  
 
-        {/* Section 2: Meet Nicole - Bio with Headshot */}
-        <section className="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-16 px-4 md:px-8">
-            <div className="max-w-6xl w-full grid bg-white shadow-2xl rounded-xl p-8 md:p-12 lg:p-16 transform transition-all duration-500 hover:scale-[1.01]">
-            
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
-                    {/* Headshot Placeholder */}
-                    <div className="flex justify-center md:justify-center">
-                        <Image
-                        src={HeadshotImage}
-                        alt="Nicole's Headshot"
-                        className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-xl border-4 border-stone-300 transform transition-transform duration-300 hover:scale-105"
-                        />
+        {/* Section 1: Meet Nicole - Bio with Headshot */}
+        <section className="min-h-screen bg-gray-50 h-screen py-16 px-4 md:px-8">
+
+            <div className="h-full pt-20 pb-50 grid place-items-center">
+                <div className="max-w-6xl w-full h-full grid bg-white shadow-2xl rounded-xl p-8 md:p-12 lg:p-16 transform transition-all duration-500 hover:scale-[1.01]">
+                
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
+                        {/* Headshot Placeholder */}
+                        <div className="flex justify-center md:justify-center">
+                            <Image
+                            src={HeadshotImage}
+                            alt="Nicole's Headshot"
+                            className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover shadow-xl border-4 border-stone-300 transform transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* Nicole's Bio Text */}
+                        <div className="text-center md:text-left">
+                            <h2 className="text-4xl md:text-5xl font-bold text-sky-800 mb-6 leading-tight">
+                            Meet Nicole
+                            </h2>
+                            <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                                Nicole’s teaching philosophy is rooted in deep respect for the craft and the individual journey of each student. She has a particular passion for specificity in performance, detailed text analysis, and encouraging students to see their work from the audience’s perspective. Known for her ability to cultivate nuanced, authentic character portrayals, Nicole emphasizes emotional truth and technical precision. Her classrooms are safe, inclusive spaces where students are challenged artistically and supported holistically. She is deeply committed to providing tailored mentorship, practical career guidance, and fostering the confidence and resilience necessary for success in the performing arts.
+                            </p>
+                        </div>    
+
                     </div>
-
-                    {/* Nicole's Bio Text */}
-                    <div className="text-center md:text-left">
-                        <h2 className="text-4xl md:text-5xl font-bold text-sky-800 mb-6 leading-tight">
-                        Meet Nicole
-                        </h2>
-                        <p className="text-gray-700 leading-relaxed text-lg mb-4">
-                            Nicole’s teaching philosophy is rooted in deep respect for the craft and the individual journey of each student. She has a particular passion for specificity in performance, detailed text analysis, and encouraging students to see their work from the audience’s perspective. Known for her ability to cultivate nuanced, authentic character portrayals, Nicole emphasizes emotional truth and technical precision. Her classrooms are safe, inclusive spaces where students are challenged artistically and supported holistically. She is deeply committed to providing tailored mentorship, practical career guidance, and fostering the confidence and resilience necessary for success in the performing arts.
-                        </p>
-                    </div>    
-
                 </div>
             </div>
+ 
         </section>
 
-        {/* Section 3: Coaching Sessions */}
+        {/* Section 2: Coaching Sessions */}
         <section className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 px-4 md:px-8">
             <div className="max-w-5xl w-full text-center bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl shadow-2xl p-8 md:p-12 lg:p-16 border border-gray-700 transform transition-all duration-500 hover:scale-[1.01]">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
@@ -92,7 +81,7 @@ Nicole will either work with your audition side/speech/monologue or she will per
             </div>
         </section>
 
-        {/* Section 4: FAQ */}
+        {/* Section 3: FAQ */}
         <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-16 px-4 md:px-8">
             <div className="max-w-5xl w-full">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-sky-800 mb-12 leading-tight">
@@ -150,7 +139,7 @@ Nicole will either work with your audition side/speech/monologue or she will per
             </div>
         </section>
 
-        {/* Section 5: Call to Action */}
+        {/* Section 4: Call to Action */}
         <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center py-16 px-4 md:px-8">
             <div className="text-center max-w-4xl">
             <h2 className="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg leading-tight">
