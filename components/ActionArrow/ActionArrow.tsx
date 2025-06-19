@@ -2,11 +2,12 @@
 import { ArrowDown } from "lucide-react";
 import { FC, useEffect, useState } from "react";
 
-interface Props {}
+interface Props {
+    navAdjust: boolean
+}
 
 const ActionArrow: FC<Props> = (props) => {
     
-
     const [hasScrolled, setHasScrolled] = useState(false);
 
     const handleArrowClick = () => {
@@ -27,7 +28,7 @@ const ActionArrow: FC<Props> = (props) => {
 
     return (
         <>
-            <div id="arrow" className="absolute bottom-0 h-20 grid place-items-center">
+            <div id="arrow" className={`absolute bottom-0 h-${props.navAdjust ? "32" : "20"} grid place-items-center`}>
                 <ArrowDown 
                     onClick={handleArrowClick}
                     stroke="#ffffff" 
