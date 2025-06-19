@@ -8,12 +8,12 @@ const pages = [
         href: "/about"  
     },
     {
-        title: "Policy",
-        href: "/policy"
-    },
-    {
         title: "FAQ",
         href: "/faq"
+    },
+    {
+        title: "Policy",
+        href: "/policy"
     },
     {
         title: "Contact",
