@@ -57,7 +57,7 @@ const Home = () => {
                             className={`${oswald.className} text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight`}
                             variants={itemVariants}
                         >
-                            NICOLE MCDONALD ACTING
+                            NICOLE MCDONALD ACTING COACH
                         </motion.h1>
                         <motion.p
                             className={`${nunito.className} text-lg md:text-xl lg:text-2xl mt-4 max-w-2xl mx-auto`}
