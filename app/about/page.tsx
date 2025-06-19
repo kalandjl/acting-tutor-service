@@ -6,6 +6,7 @@ import React from 'react';
 import { nunito, oswald } from '../fonts';
 import HeadshotImage from "@/public/headshot.jpg"
 import Image from 'next/image';
+import ActionSection from '@/components/PageSections/ActionSection/ActionSection';
 
 // The main App component for the About Us page
 const Home = () => {
@@ -21,7 +22,7 @@ const Home = () => {
         {/* Section 1: Meet Nicole - Bio with Headshot */}
         <section className="min-h-screen bg-gray-50 h-screen py-16 px-4 md:px-8">
 
-            <div className="h-full pt-20 pb-50 grid place-items-center">
+            <div className="h-full pb-50 grid place-items-center">
                 <div className="max-w-6xl w-full h-full grid bg-white shadow-2xl rounded-xl p-8 md:p-12 lg:p-16 transform transition-all duration-500 hover:scale-[1.01]">
                 
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
@@ -85,27 +86,7 @@ Nicole will either work with your audition side/speech/monologue or she will per
             </div>
         </section>
 
-
-
-        {/* Section 3: Call to Action */}
-        <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center py-16 px-4 md:px-8">
-            <div className="text-center max-w-4xl">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg leading-tight">
-                Ready to Elevate Your Craft?
-            </h2>
-            <p className="text-sky-100 leading-relaxed text-xl md:text-2xl mb-12">
-                Have questions or want to book a session with Nicole? We'd love to hear from you!
-            </p>
-            <Link
-                href="/book" // Assuming you have a contact page route
-                className="inline-block bg-white text-sky-800 font-bold py-5 px-12 rounded-full shadow-2xl text-xl md:text-2xl
-                        transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-100
-                        focus:outline-none focus:ring-4 focus:ring-sky-300 focus:ring-opacity-75"
-            >
-                Book a Session
-            </Link>
-            </div>
-        </section>
+        <ActionSection />           
         </div>
     </Layout>
     </>

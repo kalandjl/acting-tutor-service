@@ -20,10 +20,12 @@ const Home = () => {
                                 </h1>
                             </div>
                             <div id="text-wrap">
-                                <p>
-                                    Can a parent attend a youth coaching session?
-    For underage actors, a student can be accompanied with their parent for the entire duration of the coaching session.
-                                </p>
+                                <div>
+                                    <h1 className="font-bold text-md mt-3">Can a parent attend a youth coaching session?</h1>
+                                    <p>
+                                        For underage actors, a student can be accompanied with their parent for the entire duration of the coaching session.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div id="cancelation-policy" className="w-full mt-10">
