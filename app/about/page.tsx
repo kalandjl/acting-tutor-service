@@ -1,6 +1,6 @@
 import ActionArrow from '@/components/ActionArrow';
 import Layout from '@/components/Layout';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { nunito, oswald } from '../fonts';
@@ -69,7 +69,11 @@ const Home = () => {
                 ].map((item, index) => (
                 <li key={index} className="bg-gray-700 bg-opacity-60 p-4 rounded-lg shadow-md flex items-center
                                             transform transition-transform duration-200 hover:scale-105 hover:bg-gray-600 hover:bg-opacity-70">
-                    <span className="text-sky-400 mr-3 text-2xl">✓</span> {item}
+                    {/* <span className="text-sky-400 mr-3 text-2xl">✓</span>  */}
+                    <span className="text-sky-400 mr-3 text-2xl">
+                        <Check />
+                    </span> 
+                    {item}
                 </li>
                 ))}
             </ul>
