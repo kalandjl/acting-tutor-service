@@ -1,13 +1,15 @@
-"use client"
+// This directive is necessary for Framer Motion components and other client-side hooks.
+"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { nunito, oswald } from "./fonts"; // Assuming oswaldBold is included in oswald or not needed separately
+import { nunito, oswald } from "./fonts";
 import Layout from "@/components/Layout";
 import AboutSection from "@/components/PageSections/AboutSection";
+import ActionArrow from "@/components/ActionArrow";
 
 const Home = () => {
-    // Animation variants for Framer Motion
+    // Animation variants for Framer Motion remain the same
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -26,29 +28,31 @@ const Home = () => {
     return (
         <Layout navColor="sky-800">
             <>
-                <div className="bg-sky-800"></div>
-                {/* Ensure navColor uses full Tailwind class */}
-                <section
+                {/* The Hero Section now uses a calculated height to fill the screen
+                  h-[calc(100vh-6rem)] = 100% viewport height minus 6rem (the h-24 navbar)
+                  Flexbox is used to perfectly center the content vertically and horizontally.
+                */}
+                <section 
                     id="hero"
-                    className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-stone-900"
+                    className="relative w-full h-[calc(100vh-6rem)] flex items-center justify-center overflow-hidden"
                 >
-                    {/* Hero Image - Full width and height, covering the section */}
-                    <div className="absolute inset-0">
+                    { /* Background Image & Overlay */}
+                    <div className="absolute inset-0 z-0">
                         <Image
                             src="https://images.unsplash.com/photo-1561264974-153c4dacddd2?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Nicole McDonald Acting"
-                            layout="fill" // Makes the image fill its parent
-                            objectFit="cover" // Ensures the image covers the area, cropping if necessary
-                            quality={90} // Improve image quality
-                            priority // Load this image with high priority
-                            className="opacity-60" // Subtle transparency to help text stand out
+                            layout="fill"
+                            objectFit="cover"
+                            quality={90}
+                            priority
+                            className="opacity-70" // Adjusted opacity for better text readability
                         />
+                        <div className="absolute inset-0 bg-black/70"></div> {/* Simplified overlay */}
                     </div>
-                    <div className="absolute inset-0 bg-black opacity-50"></div>
 
-                    {/* Content Overlay */}
+                    {/* Centered Content */}
                     <motion.div
-                        className="relative z-10 text-center text-stone-100 p-8 max-w-4xl mx-auto"
+                        className="relative z-10 text-center text-stone-100 p-8 max-w-4xl"
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
@@ -72,10 +76,15 @@ const Home = () => {
                             With a passion for compelling narratives and a dedication to craft, Nicole McDonald delivers powerful and nuanced performances across stage and screen.
                         </motion.p>
                     </motion.div>
+                    
+                    {/* The Action Arrow is now positioned relative to the section */}
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+                         <ActionArrow navAdjust={false} />
+                    </div>
                 </section>
 
-                <AboutSection /> {/* This section will likely have its own styling */}
-            </> 
+                <AboutSection />
+            </>
         </Layout>
     );
 };

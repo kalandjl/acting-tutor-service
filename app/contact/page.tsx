@@ -70,7 +70,7 @@ const ContactPage = () => {
                                     nicolemcdonald77@gmail.com
                                 </a>
                             </p>
-                            <p className={`${nunito.className} text-md text-stone-400`}>
+                            <p className={`${nunito.className} text-md text-stone-300`}>
                                 (Any general questions relating to my services)
                             </p>
                         </motion.div>
@@ -103,7 +103,7 @@ const ContactPage = () => {
                                     ></motion.i>
                                 </a>
                             </div>
-                            <p className={`${nunito.className} text-md text-stone-400 mt-4`}>
+                            <p className={`${nunito.className} text-md text-stone-300 mt-4`}>
                                 Check out my professional online platforms!
                             </p>
                         </motion.div>
@@ -116,7 +116,7 @@ const ContactPage = () => {
                             <h2 className={`${oswald.className} text-3xl font-bold mb-4 text-sky-300`}>
                                 Based In
                             </h2>
-                            <p className={`${nunito.className} text-lg mb-2`}>
+                            <p className={`${nunito.className} text-lg mb-2 text-stone-300`}>
                                 Vancouver, British Columbia, Canada
                             </p>
                             <p className={`${nunito.className} text-md text-stone-400`}>
