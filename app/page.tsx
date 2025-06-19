@@ -7,6 +7,7 @@ import { nunito, oswald } from "./fonts";
 import Layout from "@/components/Layout";
 import AboutSection from "@/components/PageSections/AboutSection";
 import ActionArrow from "@/components/ActionArrow";
+import ActionSection2 from "@/components/PageSections/ActionSection2";
 
 const Home = () => {
     // Animation variants for Framer Motion remain the same
@@ -84,6 +85,8 @@ const Home = () => {
                 </section>
 
                 <AboutSection />
+
+                <ActionSection2 />
             </>
         </Layout>
     );
