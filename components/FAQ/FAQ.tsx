@@ -52,19 +52,6 @@ const FAQ: FC<Props> = (props) => {
                     </div>
                 </div>
 
-                <div id="action-faq" className='grid place-items-center py-10'>
-                    <Link href="/faq">
-                        <button className='grid place-items-center bg-stone-200 px-10 py-5 rounded-md border-2 border-gray-900
-                        transition ease-in-out hover:scale-105 hover:cursor-pointer'>
-                            <div className='grid gap-5 grid-flow-col'>
-                                <span className={`${nunito.className} text-stone-900 text-lg`}>
-                                    More Frequently Asked Questions
-                                </span>
-                                <ArrowRight stroke='#000000' />
-                            </div>
-                        </button>
-                    </Link>
-                </div>
                 </div>
             </section>
         </>
