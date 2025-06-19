@@ -71,7 +71,7 @@ const ContactPage = () => {
                                 </a>
                             </p>
                             <p className={`${nunito.className} text-md text-stone-300`}>
-                                (Any general questions relating to my services)
+                                (Any general questions relating to Nicole's services)
                             </p>
                         </motion.div>
 
@@ -104,7 +104,7 @@ const ContactPage = () => {
                                 </a>
                             </div>
                             <p className={`${nunito.className} text-md text-stone-300 mt-4`}>
-                                Check out my professional online platforms!
+                                Check out Nicole's professional online platforms
                             </p>
                         </motion.div>
 
