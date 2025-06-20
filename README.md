@@ -1,4 +1,4 @@
-# Nicole's Coaching Website
+# Acting Coaching Website
 
 A modern, responsive website built with Next.js, Tailwind CSS, and Firebase for Nicole, a theatre educator and performance coach based in Vancouver. The site highlights her services, experience, and allows users to book tailored coaching sessions.
 
