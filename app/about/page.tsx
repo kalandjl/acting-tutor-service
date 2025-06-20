@@ -79,9 +79,7 @@ const Home = () => {
                 ))}
             </ul>
             <p className="text-gray-300 leading-relaxed text-lg">
-
-Nicole will either work with your audition side/speech/monologue or she will personally select materials for what the actor would be auditioning for or wanting to work on. If you have a specific upcoming audition, bring your material.
-
+                Nicole will either work with your audition side/speech/monologue or she will personally select materials for what the actor would be auditioning for or wanting to work on. If you have a specific upcoming audition, bring your material.
             </p>
             </div>
         </section>

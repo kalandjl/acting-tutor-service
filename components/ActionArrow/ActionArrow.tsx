@@ -3,7 +3,7 @@ import { ArrowDown } from "lucide-react";
 import { FC, useEffect, useState } from "react";
 
 interface Props {
-    navAdjust: boolean
+    navAdjust?: boolean
 }
 
 const ActionArrow: FC<Props> = (props) => {
