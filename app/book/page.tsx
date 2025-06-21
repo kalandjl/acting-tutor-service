@@ -289,7 +289,7 @@ const App = () => {
                             disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Booking Request'}
+                  {isSubmitting ? 'Sending...' : 'Book your Online Session'}
                 </button>
               </div>
             </form>

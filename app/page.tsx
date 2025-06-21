@@ -8,6 +8,7 @@ import Layout from "@/components/Layout";
 import AboutSection from "@/components/PageSections/AboutSection";
 import ActionArrow from "@/components/ActionArrow";
 import ActionSection2 from "@/components/PageSections/ActionSection2";
+import Link from "next/link";
 
 const Home = () => {
     // Animation variants for Framer Motion remain the same
@@ -77,12 +78,17 @@ const Home = () => {
                         >
                             With a passion for compelling narratives and a dedication to craft, Nicole McDonald helps you deliver powerful and nuanced performances across stage and screen.
                         </motion.p>
-                        <motion.p
-                            className={`${nunito.className} text-base md:text-lg mt-6 max-w-3xl mx-auto`}
+                        <motion.div
+                            className={`${nunito.className} text-base md:text-lg mt-6 max-w-3xl mx-auto  grid place-items-center`}
                             variants={itemVariants}
                         >
-                          Book your online session now.  
-                        </motion.p>
+                            <span className="bg-stone-800 px-4 py-2 shadow-2xl relative overflow-hidden group hover:cursor-pointer">
+                                <p>Book your online session now </p>
+                                <div className="overflow-hidden">
+                                    <div className="h-0.5 right-0 left-0 bg-white transition opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100"></div>
+                                </div>
+                            </span>
+                        </motion.div>
 
                     </motion.div>
                     
