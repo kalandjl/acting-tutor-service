@@ -75,38 +75,7 @@ const ContactPage = () => {
                             </p>
                         </motion.div>
 
-                        {/* Social Media Section */}
-                        <motion.div
-                            className="md:col-span-1 bg-stone-800 p-8 rounded-lg shadow-xl flex flex-col items-center text-center" // Changed to md:col-span-1
-                            variants={itemVariants}
-                        >
-                            <h2 className={`${oswald.className} text-3xl font-bold mb-4 text-sky-300`}>
-                                Connect Online
-                            </h2>
-                            <div className="flex space-x-6 text-4xl">
-                                {/* Instagram Link */}
-                                <a href="https://www.instagram.com/nicolemcdonald_acting/" target="_blank" rel="noopener noreferrer" className="text-stone-300 hover:text-sky-400 transition-colors duration-200">
-                                    <motion.i
-                                        className="fab fa-instagram" // Font Awesome Instagram icon
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        aria-label="Instagram Profile"
-                                    ></motion.i>
-                                </a>
-                                {/* LinkedIn Link */}
-                                <a href="https://www.linkedin.com/in/nicolemcdonald/" target="_blank" rel="noopener noreferrer" className="text-stone-300 hover:text-sky-400 transition-colors duration-200">
-                                    <motion.i
-                                        className="fab fa-linkedin-in" // Font Awesome LinkedIn icon
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        aria-label="LinkedIn Profile"
-                                    ></motion.i>
-                                </a>
-                            </div>
-                            <p className={`${nunito.className} text-md text-stone-300 mt-4`}>
-                                Check out Nicole's professional online platforms
-                            </p>
-                        </motion.div>
+    
 
                         {/* Location/Base Section */}
                         <motion.div
