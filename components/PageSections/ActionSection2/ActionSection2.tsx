@@ -13,9 +13,6 @@ const ActionSection2: FC<Props> = (props) => {
                 <h2 className="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg leading-tight">
                     Ready to Elevate Your Craft?
                 </h2>
-                <p className="text-sky-100 leading-relaxed text-xl md:text-2xl mb-12">
-                    Have questions or want to book a session with Nicole? We'd love to hear from you!
-                </p>
                 <Link
                     href="/book" // Assuming you have a contact page route
                     className="inline-block bg-white text-sky-800 font-bold py-5 px-12 rounded-full shadow-2xl text-xl md:text-2xl
