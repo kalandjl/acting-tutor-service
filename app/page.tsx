@@ -44,11 +44,12 @@ const Home = () => {
                             alt="Nicole McDonald Acting"
                             layout="fill"
                             objectFit="cover"
+                            objectPosition="center 35%"
                             quality={90}
                             priority
                             className="opacity-70" // Adjusted opacity for better text readability
                         />
-                        <div className="absolute inset-0 bg-black/70"></div> {/* Simplified overlay */}
+                        <div className="absolute inset-0 bg-black/75"></div> {/* Simplified overlay */}
                     </div>
 
                     {/* Centered Content */}
