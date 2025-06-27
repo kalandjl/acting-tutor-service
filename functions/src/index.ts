@@ -51,7 +51,6 @@
 //   // Access the actual form data from the 'data' property of the request object
 //   const formData = request.data;
 
-//   // --- 1. Basic Server-Side Validation ---
 //   // Check if required fields are present and not empty.
 //   // This is a minimal check; you'd want more robust validation (e.g., email format, phone number regex).
 //   const { name, email, phone, preferredDateTime, message, website } = formData; // 'website' is the honeypot field
@@ -74,18 +73,23 @@
 //     );
 //   }
 
-// //   --- 3. (Optional) reCAPTCHA Verification ---
-// //   If you integrate Google reCAPTCHA on your frontend, you would verify the token here.
+//   // reCAPTCHA verification
 //   const recaptchaToken = formData.recaptchaToken;
 //   if (!recaptchaToken) {
 //     throw new functions.https.HttpsError('unauthenticated', 'reCAPTCHA token missing.');
 //   }
+  
 //   try {
-//     const recaptchaSecret = functions.config().recaptcha.secret; // Store your secret securely in Firebase config
+//     // Use environment variable for the secret
+//     const secretValue = process.env.RECAPTCHA_SECRET;
+//     if (!secretValue) {
+//       throw new functions.https.HttpsError('internal', 'reCAPTCHA secret not configured.');
+//     }
+    
 //     const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
 //       method: 'POST',
 //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-//       body: `secret=${recaptchaSecret}&response=${recaptchaToken}`
+//       body: `secret=${secretValue}&response=${recaptchaToken}`
 //     });
 //     const recaptchaJson = await recaptchaResponse.json();
 //     if (!recaptchaJson.success || recaptchaJson.score < 0.5) { // Adjust score threshold as needed
@@ -96,15 +100,6 @@
 //     console.error('Error verifying reCAPTCHA:', error);
 //     throw new functions.https.HttpsError('internal', 'Could not verify reCAPTCHA.');
 //   }
-
-
-//   // --- 4. (Optional) Rate Limiting ---
-//   // You could implement rate limiting here based on IP address (if available from context)
-//   // or a unique client identifier. For example, using Firestore to store submission timestamps
-//   // and checking if too many requests come from the same source within a timeframe.
-//   // const clientIp = context.rawRequest.ip; // Note: context.rawRequest.ip might not always be reliable
-//   // console.log('Client IP:', clientIp);
-
 
 //   // --- 5. Prepare Data for Firestore ---
 //   const timestamp = admin.firestore.FieldValue.serverTimestamp(); // Get server-side timestamp
@@ -156,25 +151,29 @@
 
 //     if (messageData) {
 //       try {
-//         const smsRef = admin.firestore().collection("sms").doc();
+//         const smsRef1 = admin.firestore().collection("sms").doc();
+//         const smsRef2 = admin.firestore().collection("sms").doc();
 
-//         await smsRef.set({
+//         // First SMS
+//         await smsRef1.set({
 //           ...messageData,
 //           createdAt: admin.firestore.FieldValue.serverTimestamp(),
 //           to: "+12366680975",
 //           body: 
 //           `New message from "${messageData.name}", "${messageData.email}" Message: "${messageData.message}"`
 //         });
-//         await smsRef.set({
+
+//         // Second SMS (note: you have an empty "to" field here - you might want to fix this)
+//         await smsRef2.set({
 //           ...messageData,
 //           createdAt: admin.firestore.FieldValue.serverTimestamp(),
-//           to: "",
+//           to: "", // This is empty - you might want to add a phone number here
 //           body: 
-//           `New message from "${messageData.name}", "${messageData.email}"Message: "${messageData.message}"`
+//           `New message from "${messageData.name}", "${messageData.email}" Message: "${messageData.message}"`
 //         });
 
 //         logger.info(
-//           `Document added to 'sms' collection with ID: ${smsRef.id}`
+//           `Documents added to 'sms' collection with IDs: ${smsRef1.id}, ${smsRef2.id}`
 //         );
 //       } catch (error) {
 //         logger.error("Error adding document to 'sms' collection:", error);
@@ -184,6 +183,3 @@
 //     logger.info("Document was deleted or does not exist after the change.");
 //   }
 // });
-
-
-
