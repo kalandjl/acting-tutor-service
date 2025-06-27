@@ -3,6 +3,11 @@
 // import * as admin from 'firebase-admin';
 // import { onDocumentWritten } from 'firebase-functions/firestore';
 
+// import {config} from 'dotenv';
+
+// // Load environment variables from .env file
+// config();
+
 // const logger = functions.logger
 
 // // Initialize Firebase Admin SDK
@@ -81,7 +86,7 @@
   
 //   try {
 //     // Use environment variable for the secret
-//     const secretValue = process.env.RECAPTCHA_SECRET;
+//     const secretValue = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 //     if (!secretValue) {
 //       throw new functions.https.HttpsError('internal', 'reCAPTCHA secret not configured.');
 //     }
