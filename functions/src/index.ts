@@ -138,7 +138,7 @@ export const twillioFirestoreReroute = onDocumentWritten("contact/{docId}", asyn
     const fromNumber = twilioPhoneNumber.value();
 
     // Define recipient numbers
-    const recipientNumbers = ["+12366680975", "+1234567890"]; // Replace with your actual numbers
+    const recipientNumbers = ["+12366680975", "+12366680975"]; // Replace with your actual numbers
 
     const smsPromises = recipientNumbers.map(toNumber => {
         return twilioClient.messages.create({
