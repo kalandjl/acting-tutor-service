@@ -19,7 +19,7 @@ A modern, responsive website built with Next.js, Tailwind CSS, and Firebase for 
 - [TypeScript](https://www.typescriptlang.org/) – Typed superset of JavaScript
 - [Firebase Functions](https://firebase.google.com/docs/functions) – Serverless backend for form processing and business logic
 - [Firebase Firestore](https://firebase.google.com/docs/firestore) – NoSQL document database for storing inquiries, sessions, and user data
-- [Framer Motion (optional)](https://www.framer.com/motion/) – Declarative animations and transitions
+- [Framer Motion](https://www.framer.com/motion/) – Declarative animations and transitions
 
 ## Getting Started
 
