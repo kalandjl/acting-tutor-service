@@ -1,190 +1,168 @@
-// // Import necessary Firebase functions
-// import * as functions from 'firebase-functions';
-// import * as admin from 'firebase-admin';
-// import { onDocumentWritten } from 'firebase-functions/firestore';
+// Import v2 functions and parameter types
+import { onCall, HttpsError } from "firebase-functions/v2/https";
+import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { defineString } from "firebase-functions/params";
+import * as admin from "firebase-admin";
+import * as logger from "firebase-functions/logger";
+import fetch from "node-fetch"; // You might need to install this: npm install node-fetch
 
-// import {config} from 'dotenv';
+// Initialize Firebase Admin SDK
+admin.initializeApp();
+const db = admin.firestore();
 
-// // Load environment variables from .env file
-// config();
+// --- V2 SECRET/PARAMETER DEFINITION ---
+// Define your secrets here. When you deploy, Firebase will prompt you to enter these values.
+// For local testing, you will create a .env file.
+const recaptchaSecret = defineString("RECAPTCHA_SECRET");
+const twilioAccountSid = defineString("TWILIO_ACCOUNT_SID");
+const twilioAuthToken = defineString("TWILIO_AUTH_TOKEN");
+const twilioPhoneNumber = defineString("TWILIO_PHONE_NUMBER");
 
-// const logger = functions.logger
+// Twilio client initialization
+const twilio = require("twilio");
+// The client is initialized inside the function now to access the secret values
+// let twilioClient; // It's better to initialize it inside the function where it's used.
 
-// // Initialize Firebase Admin SDK
-// // This allows the Cloud Function to interact with Firestore and other Firebase services
-// admin.initializeApp();
+/**
+ * Interface for the data expected from the client-side booking form.
+ */
+interface BookingFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  preferredDateTime?: string;
+  message: string;
+  website?: string; // Honeypot
+  recaptchaToken?: string;
+}
 
-// // Get a reference to the Firestore database
-// const db = admin.firestore();
+/**
+ * Interface for the data structure to be stored in Firestore.
+ */
+interface FirestoreBookingData {
+  name: string;
+  email: string;
+  phone: string | null;
+  preferredDateTime: string | null;
+  message: string;
+  submittedAt: admin.firestore.FieldValue;
+  status: 'pending' | 'confirmed' | 'cancelled';
+}
 
-// /**
-//  * Interface for the data expected from the client-side booking form.
-//  * This provides type safety for the incoming data.
-//  */
-// interface BookingFormData {
-//   name: string;
-//   email: string;
-//   phone?: string; // Optional field
-//   preferredDateTime?: string; // Optional field
-//   message: string;
-//   website?: string; // Honeypot field, optional as it should be hidden
-//   recaptchaToken?: string; // Uncomment if you integrate reCAPTCHA
-// }
+/**
+ * V2 HTTPS Callable Function to handle booking form submissions.
+ */
+export const submitBooking = onCall<BookingFormData>(async (request) => {
+  const { name, email, phone, preferredDateTime, message, website, recaptchaToken } = request.data;
 
-// /**
-//  * Interface for the data structure to be stored in Firestore.
-//  */
-// interface FirestoreBookingData {
-//   name: string;
-//   email: string;
-//   phone: string | null;
-//   preferredDateTime: string | null;
-//   message: string;
-//   submittedAt: admin.firestore.FieldValue;
-//   status: 'pending' | 'confirmed' | 'cancelled'; // Example statuses
-//   // recaptchaScore?: number; // Uncomment if you store reCAPTCHA score
-// }
+  // 1. Validation
+  if (!name || !email || !message) {
+    logger.error('Missing required fields:', { name, email, message });
+    throw new HttpsError('invalid-argument', 'Please fill in all required fields (Name, Email, Message).');
+  }
 
-// /**
-//  * Firebase Cloud Function to handle booking form submissions.
-//  * This function is an HTTPS callable function, meaning it can be invoked directly from your client-side code.
-//  *
-//  * @param {functions.https.CallableRequest<BookingFormData>} request - The CallableRequest object containing data from the client.
-//  * @param {functions.https.CallableContext} context - The context of the function call (e.g., authentication info, invocation ID).
-//  */
-// exports.submitBooking = functions.https.onCall(async (request: functions.https.CallableRequest<BookingFormData>, context) => {
-//   // Access the actual form data from the 'data' property of the request object
-//   const formData = request.data;
+  // 2. Honeypot Check
+  if (website) {
+    logger.warn('Honeypot field was filled. Likely a bot.', { data: request.data });
+    throw new HttpsError('permission-denied', 'Submission rejected: suspicious activity detected.');
+  }
 
-//   // Check if required fields are present and not empty.
-//   // This is a minimal check; you'd want more robust validation (e.g., email format, phone number regex).
-//   const { name, email, phone, preferredDateTime, message, website } = formData; // 'website' is the honeypot field
+  // 3. reCAPTCHA Verification
+  if (!recaptchaToken) {
+    throw new HttpsError('unauthenticated', 'reCAPTCHA token missing.');
+  }
 
-//   if (!name || !email || !message) {
-//     console.error('Missing required fields:', { name, email, message });
-//     throw new functions.https.HttpsError(
-//       'invalid-argument',
-//       'Please fill in all required fields (Name, Email, Message).'
-//     );
-//   }
+  try {
+    // Access the secret using .value()
+    const secretValue = recaptchaSecret.value();
+    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secretValue}&response=${recaptchaToken}`
+    });
+    const recaptchaJson: any = await recaptchaResponse.json();
 
-//   // --- 2. Honeypot Check (Server-Side) ---
-//   // If the honeypot field 'website' has any value, it's likely a bot.
-//   if (website) {
-//     console.warn('Honeypot field was filled. Likely a bot submission. Data:', formData);
-//     throw new functions.https.HttpsError(
-//       'permission-denied', // Using permission-denied to indicate an unauthorized/suspicious request
-//       'Submission rejected: suspicious activity detected.'
-//     );
-//   }
+    if (!recaptchaJson.success || recaptchaJson.score < 0.5) {
+      logger.warn('reCAPTCHA verification failed or score too low:', recaptchaJson);
+      throw new HttpsError('permission-denied', 'reCAPTCHA verification failed.');
+    }
+  } catch (error) {
+    logger.error('Error verifying reCAPTCHA:', error);
+    throw new HttpsError('internal', 'Could not verify reCAPTCHA.');
+  }
 
-//   // reCAPTCHA verification
-//   const recaptchaToken = formData.recaptchaToken;
-//   if (!recaptchaToken) {
-//     throw new functions.https.HttpsError('unauthenticated', 'reCAPTCHA token missing.');
-//   }
+  // 4. Prepare Data for Firestore
+  const bookingData: FirestoreBookingData = {
+    name,
+    email,
+    phone: phone || null,
+    preferredDateTime: preferredDateTime || null,
+    message,
+    submittedAt: admin.firestore.FieldValue.serverTimestamp(),
+    status: 'pending',
+  };
+
+  // 5. Write Data to Firestore
+  try {
+    const docRef = await db.collection('contact').add(bookingData);
+    logger.log('Booking request successfully added with ID:', docRef.id);
+    return { success: true, message: 'Your booking inquiry has been sent successfully!', docId: docRef.id };
+  } catch (error: any) {
+    logger.error('Error adding booking request to Firestore:', error);
+    throw new HttpsError('internal', 'Failed to submit booking request.', error.message);
+  }
+});
+
+
+/**
+ * V2 Firestore Trigger to send SMS via Twilio.
+ */
+export const twillioFirestoreReroute = onDocumentWritten("contact/{docId}", async (event) => {
+  // Only proceed if a new document was created
+  if (!event.data?.after.exists || event.data?.before.exists) {
+    logger.log("Not a new document creation, exiting.");
+    return;
+  }
   
-//   try {
-//     // Use environment variable for the secret
-//     const secretValue = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-//     if (!secretValue) {
-//       throw new functions.https.HttpsError('internal', 'reCAPTCHA secret not configured.');
-//     }
-    
-//     const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-//       body: `secret=${secretValue}&response=${recaptchaToken}`
-//     });
-//     const recaptchaJson = await recaptchaResponse.json();
-//     if (!recaptchaJson.success || recaptchaJson.score < 0.5) { // Adjust score threshold as needed
-//       console.warn('reCAPTCHA verification failed or score too low:', recaptchaJson);
-//       throw new functions.https.HttpsError('permission-denied', 'reCAPTCHA verification failed.');
-//     }
-//   } catch (error) {
-//     console.error('Error verifying reCAPTCHA:', error);
-//     throw new functions.https.HttpsError('internal', 'Could not verify reCAPTCHA.');
-//   }
+  const messageData = event.data.after.data();
+  if (!messageData) {
+      logger.error("No data found in new document.");
+      return;
+  }
 
-//   // --- 5. Prepare Data for Firestore ---
-//   const timestamp = admin.firestore.FieldValue.serverTimestamp(); // Get server-side timestamp
-//   const bookingData: FirestoreBookingData = {
-//     name: name,
-//     email: email,
-//     phone: phone || null, // Store as null if not provided
-//     preferredDateTime: preferredDateTime || null,
-//     message: message,
-//     submittedAt: timestamp,
-//     // Add any other relevant metadata
-//     status: 'pending', // Initial status
-//     // You might want to store the reCAPTCHA score if you use it
-//   };
+  try {
+    // Initialize the client here using the secret values
+    const twilioClient = twilio(twilioAccountSid.value(), twilioAuthToken.value());
 
-//   try {
-//     // --- 6. Write Data to Firestore ---
-//     // We'll store bookings in a collection named 'bookingRequests'.
-//     // The add() method adds a new document with an auto-generated ID.
-//     const docRef = await db.collection('contact').add(bookingData);
-//     console.log('Booking request successfully added with ID:', docRef.id);
+    const messageBody = `New message from "${messageData.name}", "${messageData.email}" Message: "${messageData.message}"`;
+    const fromNumber = twilioPhoneNumber.value();
 
-//     // --- 7. Return Success Response ---
-//     return { success: true, message: 'Your booking inquiry has been sent successfully! Nicole will get back to you soon.', docId: docRef.id };
+    // Define recipient numbers
+    const recipientNumbers = ["+12366680975", "+1234567890"]; // Replace with your actual numbers
 
-//   } catch (error: any) { // Use 'any' or more specific type if known for error object
-//     console.error('Error adding booking request to Firestore:', error);
-//     // Throw an HttpsError to send a structured error message back to the client
-//     throw new functions.https.HttpsError(
-//       'internal',
-//       'Failed to submit booking request. Please try again later.',
-//       error.message // Optional: include original error message for debugging
-//     );
-//   }
-// });
+    const smsPromises = recipientNumbers.map(toNumber => {
+        return twilioClient.messages.create({
+            body: messageBody,
+            from: fromNumber,
+            to: toNumber
+        }).then((message: any) => {
+            logger.info(`SMS sent successfully to ${toNumber}. SID: ${message.sid}`);
+            // Optional: Log to Firestore
+            return db.collection("sms_logs").add({
+              ...messageData,
+              twilioSid: message.sid,
+              sentAt: admin.firestore.FieldValue.serverTimestamp(),
+              to: toNumber,
+              status: message.status,
+              body: messageBody
+            });
+        });
+    });
 
-// exports.twillioFirestoreReroute = onDocumentWritten("contact/{docId}", async (event) => {
-//   const change: any = event.data;
+    await Promise.all(smsPromises);
+    logger.info("All SMS messages processed.");
 
-//   if (!change) {
-//     logger.error("No change data found.");
-//     return;
-//   }
-
-//   const afterDoc = change.after;
-
-//   if (afterDoc.exists) {
-//     const messageData = afterDoc.data();
-
-//     if (messageData) {
-//       try {
-//         const smsRef1 = admin.firestore().collection("sms").doc();
-//         const smsRef2 = admin.firestore().collection("sms").doc();
-
-//         // First SMS
-//         await smsRef1.set({
-//           ...messageData,
-//           createdAt: admin.firestore.FieldValue.serverTimestamp(),
-//           to: "+12366680975",
-//           body: 
-//           `New message from "${messageData.name}", "${messageData.email}" Message: "${messageData.message}"`
-//         });
-
-//         // Second SMS (note: you have an empty "to" field here - you might want to fix this)
-//         await smsRef2.set({
-//           ...messageData,
-//           createdAt: admin.firestore.FieldValue.serverTimestamp(),
-//           to: "", // This is empty - you might want to add a phone number here
-//           body: 
-//           `New message from "${messageData.name}", "${messageData.email}" Message: "${messageData.message}"`
-//         });
-
-//         logger.info(
-//           `Documents added to 'sms' collection with IDs: ${smsRef1.id}, ${smsRef2.id}`
-//         );
-//       } catch (error) {
-//         logger.error("Error adding document to 'sms' collection:", error);
-//       }
-//     }
-//   } else {
-//     logger.info("Document was deleted or does not exist after the change.");
-//   }
-// });
+  } catch (error) {
+    logger.error("Error sending SMS via Twilio:", error);
+  }
+});
