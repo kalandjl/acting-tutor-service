@@ -61,28 +61,28 @@ const Home = () => {
                         animate="visible"
                     >
                         <motion.h1
-                            className={`${oswald.className} text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight`}
+                            className={`${oswald.className} text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight shadow-2xl`}
                             variants={itemVariants}
                         >
-                            NICOLE MCDONALD ACTING COACH
+                            Nicole McDonald
                         </motion.h1>
-                        <motion.p
-                            className={`${nunito.className} text-lg md:text-xl lg:text-2xl mt-4 max-w-2xl mx-auto`}
+                        <motion.h2
+                            className={`${nunito.className} text-2xl md:text-3xl lg:text-4xl mt-2 max-w-3xl mx-auto`}
                             variants={itemVariants}
                         >
-                            Bringing Stories to Life: Authentic Performances, Unforgettable Characters.
-                        </motion.p>
+                            Your Acting Coach & Mentor in Vancouver
+                        </motion.h2>
                         <motion.p
                             className={`${nunito.className} text-base md:text-lg mt-6 max-w-3xl mx-auto`}
                             variants={itemVariants}
                         >
-                            With a passion for compelling narratives and a dedication to craft, Nicole McDonald helps you deliver powerful and nuanced performances across stage and screen.
+                            My goal is to help you find your unique voice. Through personalized, one-on-one coaching, we'll build your confidence and craft performances that are both authentic and memorable.
                         </motion.p>
                         <motion.div
                             className={`${nunito.className} text-base md:text-lg mt-6 max-w-3xl mx-auto  grid place-items-center`}
                             variants={itemVariants}
                         >
-                            <span className="bg-stone-800 px-4 py-2 shadow-2xl relative overflow-hidden group hover:cursor-pointer">
+                            <span className="mt-10 bg-stone-900 px-4 py-2 shadow-2xl relative overflow-hidden group hover:cursor-pointer">
                                 <p>Book your online session now </p>
                                 <div className="overflow-hidden">
                                     <div className="h-0.5 right-0 left-0 bg-white transition opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100"></div>
