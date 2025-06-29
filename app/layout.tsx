@@ -3,11 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "Nicole McDonald Acting",
-  description: "Acting Tutoring Service",
-};
+  title: "Online Acting Coach in Vancouver | Nicole McDonald Acting",
+  description: "Unlock your potential with professional acting tutoring and on-camera coaching from Nicole McDonald in Vancouver, BC. Book a private consultation to land your next role.",};
 
 export default function RootLayout({
   children,
