@@ -26,15 +26,6 @@ const PricingSection: FC<Props> = (props) => {
                     <p className="text-stone-300">Custom, one-on-one coaching in areas like audition prep, voice, movement, and character work.</p>
                 </div>
                 </div>
-
-                <div className="mt-12">
-                <a
-                    href="#contact"
-                    className="inline-block bg-sky-800 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300"
-                >
-                    Book Your Session
-                </a>
-                </div>
             </div>
             </section>
         </>
