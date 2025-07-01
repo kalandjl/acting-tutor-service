@@ -56,6 +56,8 @@ const App = () => {
     }));
   };
 
+  useEffect(() => {console.log(isSubmitting)}, [isSubmitting])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -77,48 +79,53 @@ const App = () => {
       return;
     }
 
-    try {
-      // Execute reCAPTCHA to get a token
-      if (window.grecaptcha) {
-        await window.grecaptcha.ready(async () => {
-          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit_booking_form' });
-          setFormData(prevData => ({ ...prevData, recaptchaToken: token }));
-
-          // Now call the Cloud Function with the updated formData (including token)
-          const result = await callablesubmitBooking({ ...formData, recaptchaToken: token });
-          const responseData = result.data as { success: boolean; message: string; docId?: string };
-
-          if (responseData.success) {
-            setSubmissionMessage(responseData.message);
-            // Clear form after successful submission
-            setFormData({
-              name: '',
-              email: '',
-              phone: '',
-              preferredDateTime: '',
-              message: '',
-              website: '',
-              recaptchaToken: '',
-            });
-          } else {
-            setSubmissionMessage(responseData.message || 'Something went wrong. Please try again.');
-          }
-        });
-      } else {
-        setSubmissionMessage('reCAPTCHA not loaded. Please try again or refresh the page.');
-        console.error('grecaptcha object not found.');
-      }
-
-    } catch (error: any) {
-      console.error('Error calling Cloud Function:', error);
-      if (error.code && error.message) {
-        setSubmissionMessage(`Submission failed: ${error.message}`);
-      } else {
-        setSubmissionMessage('An unexpected error occurred. Please try again later.');
-      }
-    } finally {
+    // Check if grecaptcha is available
+    if (!window.grecaptcha) {
+      setSubmissionMessage('reCAPTCHA not loaded. Please try again or refresh the page.');
+      console.error('grecaptcha object not found.');
       setIsSubmitting(false);
+      return;
     }
+
+    // Execute reCAPTCHA to get a token
+    window.grecaptcha.ready(async () => {
+      try {
+        const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit_booking_form' });
+        
+        // Use the token directly instead of storing it in state
+        const dataToSubmit = { ...formData, recaptchaToken: token };
+        
+        // Now call the Cloud Function with the data including the token
+        const result = await callablesubmitBooking(dataToSubmit);
+        const responseData = result.data as { success: boolean; message: string; docId?: string };
+
+        if (responseData.success) {
+          setSubmissionMessage(responseData.message);
+          // Clear form after successful submission
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            preferredDateTime: '',
+            message: '',
+            website: '',
+            recaptchaToken: '',
+          });
+        } else {
+          setSubmissionMessage(responseData.message || 'Something went wrong. Please try again.');
+        }
+      } catch (error: any) {
+        console.error('Error calling Cloud Function:', error);
+        if (error.code && error.message) {
+          setSubmissionMessage(`Submission failed: ${error.message}`);
+        } else {
+          setSubmissionMessage('An unexpected error occurred. Please try again later.');
+        }
+      } finally {
+        // This finally block now runs after the Firebase call completes
+        setIsSubmitting(false);
+      }
+    });
   };
 
   return (
@@ -151,14 +158,7 @@ const App = () => {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Submission Message Display */}
-              {submissionMessage && (
-                <div className={`p-4 rounded-lg text-center font-semibold ${
-                  submissionMessage.includes('failed') || submissionMessage.includes('error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
-                }`}>
-                  {submissionMessage}
-                </div>
-              )}
+
 
               {/* Name Field */}
               <div>
@@ -281,6 +281,15 @@ const App = () => {
                 </Link>
                 </p>
               </div>
+                {/* Submission Message Display */}
+              {submissionMessage ? (
+                <div className={`p-4 rounded-lg text-center font-semibold ${
+                  submissionMessage.includes('failed') || submissionMessage.includes('error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                }`}>
+                  {submissionMessage}
+                </div>
+              ) :
+              <>
               {/* Submit Button */}
               <div className="text-center pt-4">
                 <button
@@ -294,6 +303,8 @@ const App = () => {
                   {isSubmitting ? 'Sending...' : 'Book your Online Session'}
                 </button>
               </div>
+              </>
+              } 
             </form>
           </div>
         </section>
