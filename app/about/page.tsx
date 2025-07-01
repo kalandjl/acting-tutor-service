@@ -20,9 +20,9 @@ const Home = () => {
   
 
         {/* Section 1: Meet Nicole - Bio with Headshot */}
-        <section className="min-h-screen bg-gray-50 h-screen py-16 px-4 md:px-8">
+        <section className="min-h-screen bg-gray-50 py-16 px-4 md:px-8">
 
-            <div className="h-full pb-50 grid place-items-center">
+            <div className="h-full md:pb-50 grid place-items-center">
                 <div className="max-w-6xl w-full h-full grid bg-white shadow-2xl rounded-xl p-8 md:p-12 lg:p-16 transform transition-all duration-500 hover:scale-[1.01]">
                 
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>

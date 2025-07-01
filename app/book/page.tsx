@@ -126,7 +126,7 @@ const App = () => {
       <div className="font-sans text-gray-800">
 
         {/* Section 1: Hero - Book a Session Title */}
-        <section className="min-h-screen bg-sky-800 text-white flex flex-col items-center justify-center p-4 pt-5 relative overflow-hidden">
+        <section className="min-h-screen bg-sky-800 text-white p-4 pt-5 relative overflow-hidden flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-to-br from-sky-900 to-sky-700 opacity-75"></div>
           <div className="text-center max-w-4xl relative z-10">
             <h1 className="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg">
@@ -136,7 +136,9 @@ const App = () => {
               Ready to take the next step? Fill out the form below to schedule your personalized coaching session with Nicole.
             </p>
           </div>
-          <ActionArrow />
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <ActionArrow />
+          </div>
         </section>
         
         <PricingSection />
@@ -297,7 +299,7 @@ const App = () => {
         </section>
 
         {/* Section 3: Call to Action / Additional Info (Optional) */}
-        <section className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center py-16 px-4 md:px-8">
+        <section className="md:min-h-screen py-32 md:py-16 bg-gray-900 text-white flex flex-col items-center justify-center px-4 md:px-8">
           <div className="text-center max-w-4xl">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
               What Happens Next?

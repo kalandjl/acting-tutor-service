@@ -7,11 +7,9 @@ interface Props {
 }
 
 const ActionArrow: FC<Props> = (props) => {
-    
     const [hasScrolled, setHasScrolled] = useState(false);
 
     const handleArrowClick = () => {
-
         window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
     }
 
@@ -27,15 +25,13 @@ const ActionArrow: FC<Props> = (props) => {
     }, []);
 
     return (
-        <>
-            <div id="arrow" className={`absolute bottom-0 h-${props.navAdjust ? "32" : "20"} grid place-items-center`}>
-                <ArrowDown 
-                    onClick={handleArrowClick}
-                    stroke="#ffffff" 
-                    className={`h-12 w-8 hover:cursor-pointer hover:scale-110 ease-in-out transition ${!hasScrolled ? "animate-bounce" : "opacity-0"}`} 
-                />
-            </div>
-        </>
+        <div id="arrow" className={`h-${props.navAdjust ? "32" : "20"} flex items-center`}>
+            <ArrowDown 
+                onClick={handleArrowClick}
+                stroke="#ffffff" 
+                className={`h-12 w-8 hover:cursor-pointer hover:scale-110 ease-in-out transition ${!hasScrolled ? "animate-bounce" : "opacity-0"}`} 
+            />
+        </div>
     )
 }
 
