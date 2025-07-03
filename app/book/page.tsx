@@ -18,7 +18,6 @@ declare global {
 const callablesubmitBooking = httpsCallable(functions, 'submitBooking');
 
 // Replace with your actual reCAPTCHA Site Key
-// It's best practice to load this from environment variables (e.g., process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || 'YOUR_RECAPTCHA_SITE_KEY';
 
 const App = () => {

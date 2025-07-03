@@ -134,7 +134,7 @@
 //     // Initialize the client here using the secret values
 //     const twilioClient = twilio(twilioAccountSid.value(), twilioAuthToken.value());
 
-// const messageBody = `New message from "${messageData.name}", "${messageData.email}"${messageData.phone ? `, "${messageData.phone}"` : ''} Message: "${messageData.message}"`;    const fromNumber = twilioPhoneNumber.value();
+//     const messageBody = `Booking from "${messageData.name}", "${messageData.email}"${messageData.phone ? `, "${messageData.phone}"` : ''}. MESSAGE: "${messageData.message}. PREFERED DATE: "${messageData.preferredDateTime}""`;    const fromNumber = twilioPhoneNumber.value();
 
 //     // Define recipient numbers
 //     const recipientNumbers = ["+12366680975", "+12366680975"]; // Replace with your actual numbers
