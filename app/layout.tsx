@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next";
 import "./globals.css";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Online Acting Coach in Vancouver | Nicole McDonald Acting",
@@ -13,6 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="canonical" href="https://nicolemcdonaldactingcoach.vercel.app/" />
+      </Head>
       <body
         className={`antialiased`}
       >

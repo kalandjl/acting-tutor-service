@@ -74,7 +74,7 @@ const ActionSection: FC<Props> = (props) => {
                 <div className="mt-8">
                     <Link href="/book">
                         <p className="inline-block bg-sky-400 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:bg-sky-500 transition-transform transform hover:scale-105 duration-300">
-                            Book My Introductory Session
+                            Book Your Introductory Session
                         </p>
                     </Link>
                 </div>
