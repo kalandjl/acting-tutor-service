@@ -1,10 +1,14 @@
 import Layout from "@/components/Layout"
+import Head from "next/head"
 import Link from "next/link"
 
 const Home = () => {
 
     return (
         <>  
+            <Head>
+                <link rel="canonical" href="https://nicolemcdonaldactingcoach.vercel.app/policy" />
+            </Head>
             <Layout navColor="stone-800">
                 <section className="grid xl:px-96 lg:px-64 md:px-48 place-items-center min-h-screen mt-10">
                     <div className="h-screen mt-10">

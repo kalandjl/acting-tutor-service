@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
+import Head from 'next/head';
 
 // Simulate font classes as they are external imports in the original code
 const oswald = { className: 'font-extrabold' }; // Using Tailwind's font-extrabold for Oswald effect
@@ -31,6 +32,9 @@ const ContactPage = () => {
     return (
         <Layout navColor="stone-800">
             <>
+                <Head>
+                    <link rel="canonical" href="https://nicolemcdonaldactingcoach.vercel.app/contact" />
+                </Head>
                 {/* Main content section for the contact page */}
                 <motion.section
                     className="min-h-screen bg-stone-900 text-stone-100 py-16 px-4 md:px-8 lg:px-16 flex flex-col items-center justify-center font-inter" // Added font-inter for default
