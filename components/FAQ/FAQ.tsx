@@ -19,7 +19,7 @@ const FAQ: FC<Props> = (props) => {
 
                 <div className="space-y-8">
                     <div className="bg-white p-8 rounded-lg shadow-xl border-l-4 border-sky-600 transform transition-all duration-300 hover:scale-[1.005] hover:shadow-2xl">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">What will I recieve my zoom link?</h3>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">When will I recieve my zoom link?</h3>
                     <p className="text-gray-700 leading-relaxed text-lg mb-2">
                         Nicole will send you a link by email within 24 hours of booking your lesson.
                     </p>
