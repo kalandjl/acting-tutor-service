@@ -138,7 +138,7 @@
 
 //     // Define recipient numbers
 //     // const recipientNumbers = ["+16048310312", ];
-//     const recipientNumbers = ["+12366680975"];
+//     const recipientNumbers = ["+16048310312"];
 
 //     const smsPromises = recipientNumbers.map(toNumber => {
 //         return twilioClient.messages.create({
