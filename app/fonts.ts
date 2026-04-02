@@ -1,4 +1,4 @@
-import { Big_Shoulders_Display, Lato, Nunito, Oswald } from "next/font/google"
+import { Lato, Nunito, Oswald } from "next/font/google"
 
 export const oswald = Oswald({
   weight: '300',
@@ -20,12 +20,6 @@ export const lato = Lato({
   subsets: ['latin'],
 })
 export const latoLite = Lato({
-  weight: '400',
-  subsets: ['latin'],
-})
-
-
-export const shoulders = Big_Shoulders_Display({
   weight: '400',
   subsets: ['latin'],
 })

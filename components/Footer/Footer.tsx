@@ -1,4 +1,4 @@
-import { lato, latoLite, nunito, oswald, shoulders } from "@/app/fonts";
+import { lato, latoLite, nunito, oswald } from "@/app/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
